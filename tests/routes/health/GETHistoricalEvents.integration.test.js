@@ -6,24 +6,28 @@ describe('GET /api/history/:ocurrence', () => {
     afterAll(() => {
         server.close()
     })
+
     /**
      * Primer Test
      */
-
     test('Solicitud de Ocurrence ac', async () => {
         const response = await request(app.callback()).get('/api/history/ac')
         expect(response.status).toBe(200)
-        expect(response.body.date).toBeGreaterThan(0)
+        response.body.forEach(item => {
+            expect(Number(item.date)).toBeLessThan(0)
+        })
+        
     })
 
     /**
      * Segundo Test
      */
-
     test('Solicitud de Ocurrence dc', async () => {
         const response = await request(app.callback()).get('/api/history/dc')
         expect(response.status).toBe(200)
-        //expect(response.date).toBeLessThan(0)
+        response.body.forEach(item => {
+            expect(Number(item.date)).toBeGreaterThan(0)
+        })
     })
 
     /**
